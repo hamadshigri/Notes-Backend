@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import {router} from "./routes/note.route.js";
 import cors from "cors";
+import authRoute from "./routes/user.route.js";
 
 const app = express();
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cors());
 
 app.use("/", router);
+app.use("/auth", authRoute);
 
 mongoose
   .connect(process.env.MONGO_URI)
