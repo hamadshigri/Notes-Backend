@@ -2,7 +2,7 @@ import {Note} from "../models/note.model.js";
 
 export const getAllNotes = async (req, res) => {
     try {
-    const data = await Note.find();
+    const data = await Note.find({user: req.user});
     if(!data) {
         return res.status(404).json({message: "Notes Not Found"});
     }
@@ -20,7 +20,7 @@ export const createNote = async (req, res) => {
     if(!title || !message) {
         return res.status(404).json({message: "Please add the data"});
     }
-    const note = await Note.create({title, message});
+    const note = await Note.create({title, message, user: req.user});
     return res.status(201).json({message: "Data Created", note});
     } catch (error) {
     return res.status(500).json({error: error.message});
